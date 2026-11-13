@@ -47,6 +47,12 @@ else
     || die "Не удалось скачать. Если репозиторий приватный, войдите в GitHub (gh auth login) или клонируйте его сами и запустите ./install.sh из папки"
 fi
 
+# bash дочитывает уже открытый файл, поэтому после обновления продолжаем
+# свежей версией установщика, иначе запишется старая команда запуска.
+if [ -z "${ORKESTR_REEXEC:-}" ]; then
+  ORKESTR_REEXEC=1 ORKESTR_DIR="$DIR" exec bash "$DIR/install.sh"
+fi
+
 # --- зависимости ---------------------------------------------------------
 say "Ставлю зависимости (виртуальное окружение в $DIR/.venv)"
 [ -x "$DIR/.venv/bin/python" ] || "$PY" -m venv "$DIR/.venv"
@@ -132,11 +138,16 @@ if [ -z "\${TERM:-}" ] || [ "\$WORKDIR" = "\$HOME" ]; then
 fi
 cd "\$WORKDIR"
 
-PYTHONSAFEPATH=1 nohup "\$DIR/.venv/bin/python" -P -m orkestr --port "\$PORT" --db "\$DATA_DIR/orkestr.db" "\$@" >>"\$LOG" 2>&1 &
+START=\$(wc -c <"\$LOG" 2>/dev/null || echo 0)
+echo "--- \$(date '+%F %T') запуск" >>"\$LOG"
+# Свой пакет первым в путях Python: папка orkestr в текущем каталоге или в
+# PYTHONPATH пользователя не должна его подменять.
+PYTHONPATH="\$DIR\${PYTHONPATH:+:\$PYTHONPATH}" PYTHONSAFEPATH=1 \\
+  nohup "\$DIR/.venv/bin/python" -P -m orkestr --port "\$PORT" --db "\$DATA_DIR/orkestr.db" "\$@" >>"\$LOG" 2>&1 &
 echo \$! > "\$PIDFILE"
 for _ in \$(seq 1 60); do
   alive && break
-  kill -0 "\$(cat "\$PIDFILE")" 2>/dev/null || { echo "Сервер не запустился. Журнал: \$LOG"; tail -n 20 "\$LOG"; exit 1; }
+  kill -0 "\$(cat "\$PIDFILE")" 2>/dev/null || { echo "Сервер не запустился. Журнал: \$LOG"; tail -c +\$((START+1)) "\$LOG" | tail -n 25; exit 1; }
   sleep 0.25
 done
 alive || { echo "Сервер долго не отвечает. Журнал: \$LOG"; exit 1; }
