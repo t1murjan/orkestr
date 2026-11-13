@@ -374,7 +374,7 @@ def test_connect(client):
     assert c["agent_url_template"] == f"{base}/mcp/agent/{{agent_id}}"
     assert c["claude_command_template"] == f"claude mcp add --transport http orkestr {base}/mcp/agent/{{agent_id}}"
     assert json.loads(c["opencode_snippet_template"]) == {
-        "mcp": {"orkestr": {"type": "remote", "url": f"{base}/mcp/agent/{{agent_id}}", "enabled": True}}}
+        "mcp": {"orkestr": {"type": "remote", "url": f"{base}/mcp/agent/{{agent_id}}", "enabled": True, "timeout": 900000}}}
     # the URL follows the Host the client used
     c2 = client.get("/api/v1/connect", headers={"host": "127.0.0.1:8787"}).json()["mcp"]
     assert c2["agent_url_template"] == "http://127.0.0.1:8787/mcp/agent/{agent_id}"
