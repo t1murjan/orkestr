@@ -1,0 +1,32 @@
+/* Настройки screen. Scope: .view--settings. */
+.view--settings .st { display: grid; gap: var(--sp-4); max-width: 800px; min-width: 0; }
+.view--settings .st__rows { display: grid; }
+.view--settings .st__row { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-6); padding: var(--sp-4) 0; border-top: 1px solid var(--hairline); }
+.view--settings .st__rows > .st__row:first-child { border-top: 0; padding-top: 0; }
+.view--settings .st__rows > .st__row:last-child { padding-bottom: 0; }
+.view--settings .st__text { min-width: 0; }
+.view--settings .st__label { font-size: var(--fs-14); color: var(--text); }
+.view--settings .st__hint { font-size: var(--fs-13); line-height: 1.5; color: var(--text-3); margin-top: 2px; }
+.view--settings .st__control { display: flex; align-items: center; gap: var(--sp-3); flex: none; }
+.view--settings .st__control .input { width: 132px; }
+.view--settings .st__saved { font-size: var(--fs-12); color: var(--text-3); opacity: 0; transition: opacity var(--dur-fast) var(--ease); white-space: nowrap; max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
+.view--settings .st__saved.is-on { opacity: 1; }
+.view--settings .st__saved[data-bad="1"] { color: var(--err); }
+.view--settings .st__cwd { display: flex; align-items: center; gap: var(--sp-3); min-width: 0; }
+.view--settings .st__path { max-width: 260px; font-size: var(--fs-13); color: var(--text-2); }
+.view--settings .st__lead { font-size: var(--fs-14); line-height: 1.55; color: var(--text-2); max-width: 64ch; }
+.view--settings .st__pick { display: flex; align-items: center; gap: var(--sp-3); margin-top: var(--sp-4); }
+.view--settings .st__pick .select { width: 260px; }
+.view--settings .st__cmds { display: grid; gap: var(--sp-4); margin-top: var(--sp-4); }
+.view--settings .st__cmd-t { font-size: var(--fs-12); color: var(--text-3); margin-bottom: var(--sp-2); }
+.view--settings .st__cmd .code { margin: 0; }
+.view--settings .st__cmd .code__pre { white-space: pre; overflow-x: auto; }
+.view--settings .st__demo { display: grid; gap: var(--sp-3); }
+.view--settings .st__demo-btns { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
+.view--settings .st__demo .st__hint { margin: 0; }
+.view--settings .st__about { display: grid; gap: var(--sp-2); }
+.view--settings .st__about .st__hint { margin: 0; }
+.view--settings .st__arow { display: flex; gap: var(--sp-3); align-items: baseline; }
+.view--settings .st__arow .mono { font-size: var(--fs-13); color: var(--text-3); }
+@media (max-width: 1100px) { .view--settings .st__row { flex-wrap: wrap; } }
+.view--settings .st__rows { margin-top: var(--sp-4); }

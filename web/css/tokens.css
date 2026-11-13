@@ -1,0 +1,110 @@
+/* Оркестр — design tokens. Dark only. Source of truth: docs/DESIGN.md.
+   Do not add colours here or anywhere else: every colour in the product is one of these. */
+:root {
+  color-scheme: dark;
+
+  /* graphite ramp (barely cool) */
+  --bg-sunken: #0e0f11;
+  --bg: #131416;
+  --surface: #18191c;
+  --raised: #212327;
+  --raised-2: #2a2c31;
+  --hairline: rgba(236, 238, 240, 0.08);
+  --hairline-2: rgba(236, 238, 240, 0.14);
+
+  /* text roles */
+  --text: #eceef0;
+  --text-2: #a2a6ad;
+  --text-3: #838890;
+
+  /* phosphor accent, used rarely */
+  --accent: #36d1c4;
+  --accent-ink: #0b1f1d;
+  --accent-soft: rgba(54, 209, 196, 0.12);
+
+  /* semantic, meaning only */
+  --ok: #7bc47f;
+  --warn: #e0a84a;
+  --err: #e5484d;
+  --ok-soft: rgba(123, 196, 127, 0.12);
+  --warn-soft: rgba(224, 168, 74, 0.12);
+  --err-soft: rgba(229, 72, 77, 0.12);
+
+  /* runtime identity: only as a small mark on agents and lane labels */
+  --rt-claude: #d9895f;
+  --rt-opencode: #7aa7e8;
+  --rt-demo: #8d9199;
+
+  /* neutral steps for charts (ramp text colour at fixed alpha, never a new hue) */
+  --ink-1: rgba(236, 238, 240, 0.64);
+  --ink-2: rgba(236, 238, 240, 0.40);
+  --ink-3: rgba(236, 238, 240, 0.22);
+  --ink-4: rgba(236, 238, 240, 0.12);
+
+  /* type */
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --fs-12: 12px;  --lh-12: 16px;
+  --fs-13: 13px;  --lh-13: 20px;
+  --fs-14: 14px;  --lh-14: 20px;
+  --fs-16: 16px;  --lh-16: 24px;
+  --fs-20: 20px;  --lh-20: 28px;
+  --fs-28: 28px;  --lh-28: 32px;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-strong: 600;
+
+  /* spacing, 4px grid */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* radii: controls 8, cards 12, panels 16; inner = outer - padding */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-ctl: 8px;
+  --r-card: 12px;
+  --r-panel: 16px;
+
+  /* control heights */
+  --h-sm: 32px;
+  --h-md: 36px;
+  --h-lg: 44px;
+
+  /* motion: one curve */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-pop: 200ms;
+  --dur-num: 300ms;
+  --dur-enter: 360ms;
+  --dur-dial: 400ms;
+
+  /* depth: surface steps and hairlines; one soft neutral shadow for floating layers */
+  --shadow-float: 0 12px 32px rgba(0, 0, 0, 0.42);
+  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  /* layout */
+  --sidebar-w: 248px;
+  --sidebar-w-collapsed: 56px;
+  --topbar-h: 56px;
+  --page-pad: 32px;
+  --page-max: 1600px;
+
+  /* layers */
+  --z-sticky: 10;
+  --z-overlay: 100;
+  --z-modal: 200;
+  --z-popover: 300;
+  --z-toast: 400;
+}
+
+@media (max-width: 1280px) {
+  :root { --page-pad: 24px; }
+}

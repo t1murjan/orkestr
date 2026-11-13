@@ -1,0 +1,12 @@
+{"type": "session", "data": {"session_id": "ses_e2c252080ffe0Oj8i6sqqPHk6d", "model": "lmstudio-8804/mock-model", "context_window": 32768}}
+{"type": "tool_start", "data": {"tool_id": "call_1", "name": "orkestr_delegate", "input": {"agent": "worker", "task": "Сделай подзадачу"}, "mcp": {"server": "orkestr", "tool": "delegate"}}}
+{"type": "tool_end", "data": {"tool_id": "call_1", "output": "RESULT-FROM-worker: выполнено (Сделай подзадачу)", "is_error": false}}
+{"type": "usage", "data": {"input_tokens": 200, "output_tokens": 20, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 220, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "text", "data": {"text": "Подчинённый ", "delta": true}}
+{"type": "text", "data": {"text": "ответил: ", "delta": true}}
+{"type": "text", "data": {"text": "RESULT-FROM-worker: ", "delta": true}}
+{"type": "text", "data": {"text": "выполнено ", "delta": true}}
+{"type": "text", "data": {"text": "(Сделай ", "delta": true}}
+{"type": "text", "data": {"text": "подзадачу)", "delta": true}}
+{"type": "usage", "data": {"input_tokens": 300, "output_tokens": 23, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 323, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "result", "data": {"text": "Подчинённый ответил: RESULT-FROM-worker: выполнено (Сделай подзадачу)", "is_error": false, "cost_usd": 0.0, "num_turns": 2}}

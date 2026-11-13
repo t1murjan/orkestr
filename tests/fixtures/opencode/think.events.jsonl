@@ -1,0 +1,10 @@
+{"type": "session", "data": {"session_id": "ses_e2c25cd63ffeotxDCwtN4ojak3", "model": "lmstudio-8804/mock-model", "context_window": 32768}}
+{"type": "thinking", "data": {"text": "Сначала ", "delta": true}}
+{"type": "thinking", "data": {"text": "подумаю. ", "delta": true}}
+{"type": "thinking", "data": {"text": "Потом ", "delta": true}}
+{"type": "thinking", "data": {"text": "отвечу.", "delta": true}}
+{"type": "text", "data": {"text": "Ответ ", "delta": true}}
+{"type": "text", "data": {"text": "после ", "delta": true}}
+{"type": "text", "data": {"text": "размышления.", "delta": true}}
+{"type": "usage", "data": {"input_tokens": 200, "output_tokens": 8, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 208, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "result", "data": {"text": "Ответ после размышления.", "is_error": false, "cost_usd": 0.0, "num_turns": 1}}

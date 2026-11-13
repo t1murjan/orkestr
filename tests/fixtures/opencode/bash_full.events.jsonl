@@ -1,0 +1,9 @@
+{"type": "session", "data": {"session_id": "ses_e2c254448ffeEDRLsSQ4VQ375B", "model": "lmstudio-8804/mock-model", "context_window": 32768}}
+{"type": "tool_start", "data": {"tool_id": "call_1", "name": "bash", "input": {"command": "echo shell-ran", "description": "echo"}, "mcp": null}}
+{"type": "tool_end", "data": {"tool_id": "call_1", "output": "shell-ran\n", "is_error": false}}
+{"type": "usage", "data": {"input_tokens": 200, "output_tokens": 20, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 220, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "text", "data": {"text": "Результат ", "delta": true}}
+{"type": "text", "data": {"text": "shell: ", "delta": true}}
+{"type": "text", "data": {"text": "shell-ran\n", "delta": true}}
+{"type": "usage", "data": {"input_tokens": 300, "output_tokens": 9, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 309, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "result", "data": {"text": "Результат shell: shell-ran", "is_error": false, "cost_usd": 0.0, "num_turns": 2}}

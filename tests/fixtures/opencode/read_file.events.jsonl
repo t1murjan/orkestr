@@ -1,0 +1,23 @@
+{"type": "session", "data": {"session_id": "ses_e2c25b0ffffe8RPd1gHCoP4dHN", "model": "lmstudio-8804/mock-model", "context_window": 32768}}
+{"type": "tool_start", "data": {"tool_id": "call_1", "name": "read", "input": {"filePath": "/tmp/orkestr-oc-smoke-2diafipe/work/hello.txt", "file_path": "/tmp/orkestr-oc-smoke-2diafipe/work/hello.txt"}, "mcp": null}}
+{"type": "tool_end", "data": {"tool_id": "call_1", "output": "<path>/tmp/orkestr-oc-smoke-2diafipe/work/hello.txt</path>\n<type>file</type>\n<content>\n1: hello world file\n\n(End of file - total 1 lines)\n</content>", "is_error": false}}
+{"type": "usage", "data": {"input_tokens": 200, "output_tokens": 20, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 220, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "text", "data": {"text": "Файл ", "delta": true}}
+{"type": "text", "data": {"text": "прочитан: ", "delta": true}}
+{"type": "text", "data": {"text": "<path>/tmp/orkestr-oc-smoke-2diafipe/work/hello.txt</path>\n", "delta": true}}
+{"type": "text", "data": {"text": "<type>file</type>\n", "delta": true}}
+{"type": "text", "data": {"text": "<content>\n", "delta": true}}
+{"type": "text", "data": {"text": "1: ", "delta": true}}
+{"type": "text", "data": {"text": "hello ", "delta": true}}
+{"type": "text", "data": {"text": "world ", "delta": true}}
+{"type": "text", "data": {"text": "file\n\n", "delta": true}}
+{"type": "text", "data": {"text": "(End ", "delta": true}}
+{"type": "text", "data": {"text": "of ", "delta": true}}
+{"type": "text", "data": {"text": "file ", "delta": true}}
+{"type": "text", "data": {"text": "- ", "delta": true}}
+{"type": "text", "data": {"text": "total ", "delta": true}}
+{"type": "text", "data": {"text": "1 ", "delta": true}}
+{"type": "text", "data": {"text": "lines)\n", "delta": true}}
+{"type": "text", "data": {"text": "</content>", "delta": true}}
+{"type": "usage", "data": {"input_tokens": 300, "output_tokens": 54, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 354, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "result", "data": {"text": "Файл прочитан: <path>/tmp/orkestr-oc-smoke-2diafipe/work/hello.txt</path>\n<type>file</type>\n<content>\n1: hello world file\n\n(End of file - total 1 lines)\n</content>", "is_error": false, "cost_usd": 0.0, "num_turns": 2}}

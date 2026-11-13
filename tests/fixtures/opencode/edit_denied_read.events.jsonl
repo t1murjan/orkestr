@@ -1,0 +1,21 @@
+{"type": "session", "data": {"session_id": "ses_e2c255ea6ffexj7YsKY25EtBrg", "model": "lmstudio-8804/mock-model", "context_window": 32768}}
+{"type": "tool_start", "data": {"tool_id": "call_1", "name": "write", "input": {"filePath": "/tmp/orkestr-oc-smoke-_69r35rq/work/created_by_agent.txt", "content": "made by mock\n", "file_path": "/tmp/orkestr-oc-smoke-_69r35rq/work/created_by_agent.txt"}, "mcp": null}}
+{"type": "tool_end", "data": {"tool_id": "call_1", "output": "Model tried to call unavailable tool 'invalid'. Available tools: glob, grep, read, todowrite.", "is_error": true}}
+{"type": "usage", "data": {"input_tokens": 200, "output_tokens": 20, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 220, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "text", "data": {"text": "Результат ", "delta": true}}
+{"type": "text", "data": {"text": "записи: ", "delta": true}}
+{"type": "text", "data": {"text": "Model ", "delta": true}}
+{"type": "text", "data": {"text": "tried ", "delta": true}}
+{"type": "text", "data": {"text": "to ", "delta": true}}
+{"type": "text", "data": {"text": "call ", "delta": true}}
+{"type": "text", "data": {"text": "unavailable ", "delta": true}}
+{"type": "text", "data": {"text": "tool ", "delta": true}}
+{"type": "text", "data": {"text": "'invalid'. ", "delta": true}}
+{"type": "text", "data": {"text": "Available ", "delta": true}}
+{"type": "text", "data": {"text": "tools: ", "delta": true}}
+{"type": "text", "data": {"text": "glob, ", "delta": true}}
+{"type": "text", "data": {"text": "grep, ", "delta": true}}
+{"type": "text", "data": {"text": "read, ", "delta": true}}
+{"type": "text", "data": {"text": "todowrite.", "delta": true}}
+{"type": "usage", "data": {"input_tokens": 300, "output_tokens": 37, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 337, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "result", "data": {"text": "Результат записи: Model tried to call unavailable tool 'invalid'. Available tools: glob, grep, read, todowrite.", "is_error": false, "cost_usd": 0.0, "num_turns": 2}}

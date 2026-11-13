@@ -1,0 +1,46 @@
+/* Kit page only. Not shipped in the app. */
+.kit-body { overflow: auto; height: auto; min-height: 100%; }
+.kit { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--sp-8); max-width: 1320px; margin: 0 auto; padding: var(--sp-8) var(--sp-8) var(--sp-16); }
+.kit__nav { position: sticky; top: var(--sp-8); align-self: start; display: flex; flex-direction: column; gap: 2px; }
+.kit__nav a { height: 32px; display: flex; align-items: center; padding: 0 var(--sp-3); border-radius: var(--r-ctl); color: var(--text-2); font-size: var(--fs-13); }
+.kit__nav a:hover { background: var(--raised); color: var(--text); }
+.wordmark { font-size: var(--fs-16); line-height: 1; font-weight: var(--fw-medium); color: var(--text); }
+.kit__brand { display: flex; align-items: center; gap: 10px; padding: 0 var(--sp-3); height: 40px; color: var(--accent); margin-bottom: var(--sp-2); }
+.kit__main { display: flex; flex-direction: column; gap: var(--sp-16); min-width: 0; }
+.kit__head h1 { margin-bottom: var(--sp-2); }
+.kit__head p { max-width: 62ch; }
+.ksec { display: flex; flex-direction: column; gap: var(--sp-6); scroll-margin-top: var(--sp-8); }
+.ksec__head { display: flex; flex-direction: column; gap: var(--sp-1); padding-bottom: var(--sp-3); border-bottom: 1px solid var(--hairline); }
+.ksec__head h2 { font-size: var(--fs-20); }
+.ksec__head p { font-size: var(--fs-13); line-height: var(--lh-13); color: var(--text-3); }
+.krow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
+.klabel { font-size: var(--fs-12); line-height: var(--lh-12); color: var(--text-3); margin-bottom: var(--sp-2); }
+.kgrid { display: grid; gap: var(--sp-4); }
+.kgrid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.kgrid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.kgrid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.kgrid--main { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+.kswatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: var(--sp-3); }
+.kswatch { display: flex; flex-direction: column; gap: var(--sp-2); }
+.kswatch__chip { height: 48px; border-radius: var(--r-ctl); border: 1px solid var(--hairline-2); }
+.kswatch__name { font-family: var(--font-mono); font-size: var(--fs-12); color: var(--text-2); }
+.kswatch__val { font-family: var(--font-mono); font-size: var(--fs-12); color: var(--text-3); }
+.ktype { display: flex; flex-direction: column; gap: var(--sp-3); }
+.ktype__row { display: grid; grid-template-columns: 96px 1fr; align-items: baseline; gap: var(--sp-4); }
+.ktype__meta { font-family: var(--font-mono); font-size: var(--fs-12); color: var(--text-3); }
+.kdials { display: grid; grid-template-columns: 96px repeat(7, minmax(0, 1fr)); align-items: center; gap: var(--sp-4) var(--sp-3); }
+.kdials__h { font-family: var(--font-mono); font-size: var(--fs-12); color: var(--text-3); text-align: center; }
+.kdials__r { font-size: var(--fs-12); color: var(--text-3); font-family: var(--font-mono); }
+.kdials__c { display: grid; place-items: center; min-height: 92px; }
+.kdials__c--s { min-height: 36px; }
+.kdials__c--m { min-height: 60px; }
+.kchips { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+.kchip { display: inline-flex; align-items: center; gap: var(--sp-2); height: 32px; padding: 0 var(--sp-3) 0 var(--sp-2); border-radius: var(--r-ctl); background: var(--raised); border: 1px solid var(--hairline-2); color: var(--text); cursor: default; }
+.kchip--mono { font-family: var(--font-mono); font-size: var(--fs-13); padding: 0 var(--sp-3); }
+.kfigure { display: flex; align-items: center; gap: var(--sp-8); padding: var(--sp-6); }
+.kcol { display: flex; flex-direction: column; gap: var(--sp-4); min-width: 0; }
+.kstage { padding: var(--sp-6); background: var(--bg-sunken); border: 1px solid var(--hairline); border-radius: var(--r-card); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, max-content)); gap: var(--sp-6) var(--sp-12); align-items: start; }
+.kform { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4) var(--sp-6); max-width: 760px; }
+.kform .span-2 { grid-column: 1 / -1; }
+.kmeters { display: flex; flex-direction: column; gap: var(--sp-5); }
+@media (max-width: 1099px) { .kit { grid-template-columns: minmax(0, 1fr); } .kit__nav { display: none; } .kgrid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kgrid--main { grid-template-columns: minmax(0, 1fr); } }

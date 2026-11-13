@@ -1,0 +1,23 @@
+/* Обзор screen. Scope: .view--overview. */
+.view--overview .ov { display: grid; gap: var(--sp-4); min-width: 0; }
+.view--overview .ov__tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--sp-3); }
+.view--overview .ov__tile { min-width: 0; }
+.view--overview .ov__tile .stat { height: 100%; }
+.view--overview .ov__tile .stat__change { flex-direction: column; gap: 2px; align-items: flex-start; }
+@media (max-width: 1000px) { .view--overview .ov__tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.view--overview .ov__row { display: grid; gap: var(--sp-4); align-items: stretch; min-width: 0; }
+.view--overview .ov__row--main { grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); }
+.view--overview .ov__row--sub { grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); align-items: start; }
+@media (max-width: 1100px) { .view--overview .ov__row--main, .view--overview .ov__row--sub { grid-template-columns: minmax(0, 1fr); } }
+.view--overview .ov__col { display: grid; gap: var(--sp-4); align-content: start; }
+.view--overview .ov__none { font-size: var(--fs-13); color: var(--text-3); }
+.view--overview .ov__none[hidden] { display: none; }
+.view--overview .ov__task { display: block; max-width: 100%; }
+.view--overview .ov .table td:nth-child(2), .view--overview .ov .table td:nth-child(3) { max-width: 0; }
+.view--overview .ov__dial { display: inline-flex; vertical-align: middle; }
+.view--overview .ov__row .ranked { max-height: 340px; overflow: hidden; }
+.view--overview .ov__now .table { table-layout: fixed; }
+.view--overview .ov__now .table td { overflow: hidden; }
+.view--overview .ov__task, .view--overview .ov__act { display: block; }
+.view--overview .ov__now .table td:nth-child(1) .row { min-width: 0; }
+.view--overview .ov__now .table td:nth-child(1) .truncate { min-width: 0; }

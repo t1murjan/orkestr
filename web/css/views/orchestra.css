@@ -1,0 +1,201 @@
+/* Оркестр (canvas) screen. Scope every rule with .view--orchestra. */
+.view--orchestra .orch { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.view--orchestra .orch-stage { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; }
+
+/* ---- canvas ---------------------------------------------------------------------------------------- */
+.view--orchestra .orch-viewport {
+  position: absolute; inset: 0; overflow: hidden; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+  background-color: var(--bg-sunken);
+  background-image: radial-gradient(circle at center, var(--ink-3) 0.9px, transparent 1.4px);
+  background-size: var(--gs, 24px) var(--gs, 24px);
+  background-position: var(--gx, 0) var(--gy, 0);
+}
+.view--orchestra .orch-viewport.is-panning { cursor: grabbing; }
+.view--orchestra .orch-world { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; }
+.view--orchestra .orch-links { position: absolute; left: 0; top: 0; width: 1px; height: 1px; max-width: none; overflow: visible; pointer-events: none; }
+.view--orchestra .orch-nodes { position: absolute; left: 0; top: 0; }
+
+/* ---- links ----------------------------------------------------------------------------------------- */
+.view--orchestra .link__path { fill: none; stroke: var(--ink-2); stroke-width: calc(1.4px * var(--ik, 1)); stroke-linecap: round; transition: stroke var(--dur-fast) var(--ease), stroke-opacity var(--dur-fast) var(--ease); }
+.view--orchestra .link__arrow { fill: var(--ink-2); stroke: none; transition: fill var(--dur-fast) var(--ease); }
+.view--orchestra .link__hit { fill: none; stroke: transparent; stroke-width: 18; pointer-events: stroke; cursor: pointer; outline: none; }
+.view--orchestra .link:hover .link__path { stroke: var(--ink-1); }
+.view--orchestra .link:hover .link__arrow { fill: var(--ink-1); }
+.view--orchestra .link.is-active .link__path { stroke: var(--accent); stroke-opacity: 0.5; }
+.view--orchestra .link.is-active .link__arrow { fill: var(--accent); }
+.view--orchestra .link.is-selected .link__path, .view--orchestra .link:has(.link__hit:focus-visible) .link__path { stroke: var(--accent); stroke-opacity: 1; stroke-width: calc(1.8px * var(--ik, 1)); }
+.view--orchestra .link.is-selected .link__arrow, .view--orchestra .link:has(.link__hit:focus-visible) .link__arrow { fill: var(--accent); }
+.view--orchestra .link--ghost .link__path { stroke-dasharray: 4 5; }
+.view--orchestra .link--ghost .link__hit { pointer-events: none; }
+.view--orchestra .link__dash line { stroke: var(--accent); stroke-width: calc(3px * var(--ik, 1)); stroke-linecap: round; }
+.view--orchestra .link__del { cursor: pointer; pointer-events: all; outline: none; }
+.view--orchestra .link__del circle { fill: var(--raised); stroke: var(--hairline-2); transition: fill var(--dur-fast) var(--ease), stroke var(--dur-fast) var(--ease); }
+.view--orchestra .link__del path { fill: none; stroke: var(--text-2); stroke-width: 1.5; stroke-linecap: round; }
+.view--orchestra .link__del:hover circle { fill: var(--raised-2); }
+.view--orchestra .link__del:focus-visible circle { stroke: var(--accent); }
+.view--orchestra .link--draft { pointer-events: none; }
+.view--orchestra .link--draft .link__path { stroke: var(--accent); stroke-opacity: 0.85; stroke-dasharray: 5 5; }
+.view--orchestra .link--draft .link__arrow { fill: var(--accent); }
+.view--orchestra .link--draft.is-snapped .link__path { stroke-dasharray: none; }
+
+/* hover / selection focus on links */
+.view--orchestra .link { transition: opacity var(--dur-fast) var(--ease); }
+.view--orchestra .link.is-dim { opacity: 0.15; }
+.view--orchestra .link.is-hot .link__path { stroke: var(--ink-1); }
+.view--orchestra .link.is-hot .link__arrow { fill: var(--ink-1); }
+.view--orchestra .link.is-hot.is-active .link__path, .view--orchestra .link.is-hot.is-selected .link__path { stroke: var(--accent); }
+.view--orchestra .link.is-hot.is-active .link__arrow, .view--orchestra .link.is-hot.is-selected .link__arrow { fill: var(--accent); }
+
+/* ---- agent nodes: round graph nodes, the dial is the body ----------------------------------------------- */
+.view--orchestra .onode-wrap { position: absolute; left: 0; top: 0; pointer-events: none; transition: opacity var(--dur-fast) var(--ease); }
+.view--orchestra .onode-wrap > * { pointer-events: auto; }
+.view--orchestra .onode {
+  position: absolute; left: calc(50% - var(--r)); top: 0; display: grid; place-items: center; width: calc(var(--r) * 2); height: calc(var(--r) * 2); border-radius: 50%;
+  background: var(--surface); border: 1px solid var(--hairline-2); cursor: grab; outline-offset: 3px;
+  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+.view--orchestra .onode .dial { margin: -1px; }
+.view--orchestra .onode:hover { background: color-mix(in srgb, var(--raised) 70%, var(--surface)); border-color: var(--text-3); }
+.view--orchestra .onode-wrap.is-hot .onode { border-color: var(--text-3); }
+.view--orchestra .onode-wrap.is-selected .onode, .view--orchestra .onode-wrap.is-selected.is-hot .onode { border-color: var(--accent); }
+.view--orchestra .onode-wrap.is-dragging .onode { cursor: grabbing; }
+.view--orchestra .onode-wrap.is-dim { opacity: 0.28; }
+.view--orchestra .onode__label {
+  position: absolute; left: 50%; top: calc(var(--r) * 2 + 6px); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 1px;
+  width: max-content; max-width: 100%; padding: 2px 6px; background: var(--bg-sunken); border-radius: var(--r-sm); cursor: grab; text-align: center;
+}
+.view--orchestra .onode__name { max-width: 100%; font-size: var(--fs-13); line-height: 18px; font-weight: var(--fw-medium); color: var(--text); }
+.view--orchestra .onode__line { display: flex; align-items: center; justify-content: center; gap: 6px; max-width: 100%; min-width: 0; }
+.view--orchestra .onode__mark { display: inline-flex; flex: none; }
+.view--orchestra .onode__model { min-width: 0; font-size: var(--fs-12); line-height: 16px; color: var(--text-3); }
+.view--orchestra .onode__state { display: flex; align-items: center; justify-content: center; gap: 6px; max-width: 100%; min-width: 0; font-size: var(--fs-12); line-height: 16px; color: var(--text-2); }
+.view--orchestra .onode-wrap[data-status="idle"] .onode__act { color: var(--text-3); }
+.view--orchestra .onode__act { min-width: 0; }
+.view--orchestra .onode__demo { position: absolute; left: calc(50% + var(--r) * 0.62); top: 2px; background: var(--bg-sunken); pointer-events: none; }
+.view--orchestra .onode__reason {
+  position: absolute; left: 50%; top: calc(var(--r) * -1 + 36px); transform: translate(-50%, -100%); display: none; padding: 0 6px; font-family: var(--font-mono); font-size: var(--fs-12); line-height: 18px;
+  color: var(--text-2); background: var(--bg-sunken); border: 1px solid var(--hairline-2); border-radius: var(--r-xs); pointer-events: none; white-space: nowrap;
+}
+.view--orchestra .onode-wrap.is-invalid .onode__reason { display: block; top: -4px; }
+/* the port: on the rim, where a link to a subordinate starts */
+.view--orchestra .onode__port {
+  position: absolute; width: 16px; height: 16px; padding: 0; border-radius: 50%;
+  background: var(--raised); border: 1px solid var(--hairline-2); cursor: crosshair; display: grid; place-items: center;
+  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+.view--orchestra .onode__port::before { content: ""; position: absolute; inset: -8px; border-radius: 50%; }
+.view--orchestra .onode__port::after { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--text-3); transition: background-color var(--dur-fast) var(--ease); }
+.view--orchestra .onode__port:hover, .view--orchestra .onode-wrap.is-selected .onode__port { border-color: var(--accent); }
+.view--orchestra .onode__port:hover::after, .view--orchestra .onode-wrap.is-selected .onode__port::after { background: var(--accent); }
+.view--orchestra .onode-wrap.is-source .onode__port { border-color: var(--accent); background: var(--accent-soft); }
+.view--orchestra .onode-wrap.is-source .onode__port::after { background: var(--accent); }
+/* assigning a subordinate: valid targets light up, the rest step back */
+.view--orchestra .is-linking .onode { cursor: default; }
+.view--orchestra .onode-wrap.is-source .onode { border-color: var(--text-2); }
+.view--orchestra .onode-wrap.is-target .onode { border-color: color-mix(in srgb, var(--accent) 45%, var(--hairline-2)); cursor: pointer; }
+.view--orchestra .onode-wrap.is-target.is-over .onode { border-color: var(--accent); background: var(--accent-soft); }
+.view--orchestra .onode-wrap.is-invalid { opacity: 0.4; }
+.view--orchestra .onode-wrap.is-invalid .onode { cursor: not-allowed; }
+
+/* ---- floating controls ---------------------------------------------------------------------------------- */
+.view--orchestra .orch-bar { position: absolute; top: var(--sp-3); left: var(--sp-3); z-index: 3; }
+.view--orchestra .orch-bar__box, .view--orchestra .orch-zoom {
+  display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-1); background: var(--surface); border: 1px solid var(--hairline-2); border-radius: 10px;
+}
+.view--orchestra .orch-bar__text { padding: 0 var(--sp-2); font-size: var(--fs-13); color: var(--text-2); }
+.view--orchestra .orch-zoom { position: absolute; top: var(--sp-3); right: var(--sp-3); z-index: 3; gap: 2px; }
+.view--orchestra .has-drawer .orch-zoom { right: calc(400px + var(--sp-3)); }
+.view--orchestra .orch-zoom__v { min-width: 44px; text-align: center; font-size: var(--fs-12); color: var(--text-2); }
+
+/* ---- composer --------------------------------------------------------------------------------------------- */
+.view--orchestra .orch-comp {
+  position: absolute; left: var(--sp-4); right: var(--sp-4); bottom: var(--sp-4); max-width: 760px; margin: 0 auto; z-index: 3;
+  display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-3); background: var(--surface); border: 1px solid var(--hairline-2); border-radius: var(--r-panel);
+}
+.view--orchestra .has-drawer .orch-comp { right: calc(400px + var(--sp-4)); }
+.view--orchestra .is-empty .orch-comp { display: none; }
+.view--orchestra .orch-comp__meta { display: flex; align-items: center; gap: var(--sp-2); min-height: var(--h-sm); min-width: 0; }
+.view--orchestra .orch-comp__pick { width: 200px; flex: none; }
+.view--orchestra .orch-comp__live { min-width: 0; max-width: 220px; font-size: var(--fs-12); color: var(--text-2); }
+.view--orchestra .orch-comp__cwd { min-width: 0; font-size: var(--fs-12); color: var(--text-3); }
+.view--orchestra .orch-comp__cwd.is-override { color: var(--text); }
+.view--orchestra .orch-comp__task { width: 100%; min-height: 44px; max-height: 160px; resize: none; }
+.view--orchestra .orch-comp__err { font-size: var(--fs-13); color: var(--err); }
+.view--orchestra .orch-comp__err[hidden] { display: none; }
+
+/* ---- drawer ------------------------------------------------------------------------------------------------ */
+.view--orchestra .orch-drawer { position: absolute; top: 0; right: 0; bottom: 0; z-index: 4; display: flex; flex-direction: column; width: 400px; max-width: 100%; background: var(--surface); border-left: 1px solid var(--hairline-2); }
+.view--orchestra .orch-drawer[hidden] { display: none; }
+.view--orchestra .orch-drawer__head { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-4); border-bottom: 1px solid var(--hairline); }
+.view--orchestra .orch-drawer__id { flex: 1 1 auto; min-width: 0; }
+.view--orchestra .orch-drawer__name { font-size: var(--fs-16); line-height: var(--lh-16); font-weight: var(--fw-medium); }
+.view--orchestra .orch-drawer__sub { display: flex; align-items: center; gap: 6px; margin-top: 2px; font-size: var(--fs-13); color: var(--text-2); }
+.view--orchestra .orch-drawer__rt { display: inline-flex; }
+.view--orchestra .orch-drawer__body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-5); }
+.view--orchestra .orch-drawer__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4); border-top: 1px solid var(--hairline); }
+.view--orchestra .orch-drawer__saved { font-size: var(--fs-12); color: var(--text-3); }
+.view--orchestra .orch-drawer__saved[data-tone="err"] { color: var(--err); }
+.view--orchestra .orch-drawer__err { padding: var(--sp-2) var(--sp-3); font-size: var(--fs-13); color: var(--err); background: var(--err-soft); border-radius: var(--r-ctl); }
+.view--orchestra .orch-drawer__err[hidden] { display: none; }
+.view--orchestra .orch-sec { display: flex; flex-direction: column; gap: var(--sp-3); padding-bottom: var(--sp-5); border-bottom: 1px solid var(--hairline); }
+.view--orchestra .orch-sec:last-child { border-bottom: 0; padding-bottom: 0; }
+.view--orchestra .orch-sec__title { font-size: var(--fs-13); line-height: var(--lh-13); font-weight: var(--fw-medium); color: var(--text-2); }
+.view--orchestra .orch-now__text { font-size: var(--fs-14); line-height: var(--lh-14); }
+.view--orchestra .orch-now__text.is-idle { color: var(--text-3); }
+.view--orchestra .orch-now__ctx { font-size: var(--fs-12); color: var(--text-3); }
+.view--orchestra .orch-model { display: flex; flex-direction: column; gap: var(--sp-2); }
+.view--orchestra .orch-note { font-size: var(--fs-12); line-height: var(--lh-12); color: var(--text-3); }
+.view--orchestra .orch-note[hidden] { display: none; }
+.view--orchestra .orch-note--perm { color: var(--text-2); font-size: var(--fs-13); line-height: var(--lh-13); margin-top: var(--sp-2); }
+.view--orchestra .orch-note--perm[data-tone="warn"] { color: var(--warn); }
+.view--orchestra .orch-cwd { display: flex; align-items: center; gap: var(--sp-2); min-height: var(--h-sm); }
+.view--orchestra .orch-cwd__path { flex: 1 1 auto; min-width: 0; font-size: var(--fs-12); color: var(--text); }
+.view--orchestra .orch-cwd__path.is-default { color: var(--text-3); }
+.view--orchestra .orch-rel { display: flex; flex-direction: column; gap: var(--sp-2); }
+.view--orchestra .orch-rel__label { font-size: var(--fs-12); color: var(--text-3); }
+.view--orchestra .orch-chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.view--orchestra .orch-chip { display: inline-flex; align-items: center; max-width: 100%; height: 28px; padding-left: var(--sp-2); background: var(--raised); border: 1px solid var(--hairline); border-radius: var(--r-ctl); }
+.view--orchestra .orch-chip__name { display: inline-flex; align-items: center; gap: 6px; min-width: 0; padding: 0; font-size: var(--fs-13); color: var(--text); border-radius: var(--r-xs); }
+.view--orchestra .orch-chip .btn { width: 24px; height: 24px; margin-left: 2px; }
+.view--orchestra .orch-none { font-size: var(--fs-13); color: var(--text-3); }
+.view--orchestra .orch-runs { list-style: none; margin: 0 calc(var(--sp-2) * -1); padding: 0; display: flex; flex-direction: column; }
+.view--orchestra .orch-run { display: flex; align-items: center; gap: var(--sp-2); height: 32px; padding: 0 var(--sp-2); font-size: var(--fs-13); color: var(--text-2); border-radius: var(--r-ctl); transition: background-color var(--dur-fast) var(--ease); }
+.view--orchestra .orch-run:hover { background: var(--raised); color: var(--text); }
+.view--orchestra .orch-run__task { flex: 1 1 auto; min-width: 0; }
+.view--orchestra .orch-run__meta { flex: none; font-size: var(--fs-12); color: var(--text-3); }
+
+/* ---- terminal sessions lane ------------------------------------------------------------------------------- */
+.view--orchestra .orch-lane { flex: none; display: flex; align-items: center; gap: var(--sp-4); min-height: var(--h-md); padding: 0 var(--sp-4); background: var(--bg); border-bottom: 1px solid var(--hairline); }
+.view--orchestra .orch-lane[hidden] { display: none; }
+.view--orchestra .orch-lane__toggle { display: flex; flex: none; align-items: center; gap: var(--sp-2); height: var(--h-md); padding: 0; font-size: var(--fs-12); color: var(--text-2); border-radius: var(--r-xs); }
+.view--orchestra .orch-lane__toggle:hover { color: var(--text); }
+.view--orchestra .orch-lane__chev { display: inline-flex; transition: transform var(--dur-fast) var(--ease); }
+.view--orchestra .orch-lane__toggle[aria-expanded="false"] .orch-lane__chev { transform: rotate(-90deg); }
+.view--orchestra .orch-lane__count { color: var(--text-3); }
+.view--orchestra .orch-lane__list { display: flex; flex: 1 1 auto; min-width: 0; gap: var(--sp-2); padding: var(--sp-2) 0; overflow-x: auto; }
+.view--orchestra .orch-lane__list[hidden] { display: none; }
+.view--orchestra .orch-ses { flex: 0 0 264px; display: flex; align-items: center; gap: var(--sp-3); min-width: 0; padding: 6px var(--sp-3); background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-card); transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+.view--orchestra .orch-ses:hover { background: var(--raised); border-color: var(--hairline-2); }
+.view--orchestra .orch-ses__text { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+.view--orchestra .orch-ses__title { font-size: var(--fs-13); line-height: 18px; font-weight: var(--fw-medium); }
+.view--orchestra .orch-ses__line { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: var(--fs-12); line-height: 16px; color: var(--text-3); }
+.view--orchestra .orch-ses__model { min-width: 0; }
+.view--orchestra .orch-ses__subs { flex: none; margin-left: auto; font-family: var(--font-sans); }
+.view--orchestra .orch-ses__act { font-size: var(--fs-12); line-height: 16px; color: var(--text-2); }
+
+/* ---- empty states ---------------------------------------------------------------------------------------------- */
+.view--orchestra .orch-emptyhost { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; pointer-events: none; }
+.view--orchestra .orch-empty { pointer-events: auto; }
+.view--orchestra .orch-empty__panel { width: min(560px, calc(100vw - 96px)); padding: var(--sp-8); background: var(--surface); border: 1px solid var(--hairline-2); border-radius: var(--r-panel); display: flex; flex-direction: column; gap: var(--sp-4); }
+.view--orchestra .orch-empty__title { font-size: var(--fs-20); line-height: var(--lh-20); font-weight: var(--fw-medium); }
+.view--orchestra .orch-empty__lead { color: var(--text-2); }
+.view--orchestra .orch-steps { list-style: none; margin: var(--sp-2) 0; padding: 0; display: flex; flex-direction: column; }
+.view--orchestra .orch-step { display: grid; grid-template-columns: 36px 1fr; gap: var(--sp-3); padding: var(--sp-3) 0; border-top: 1px solid var(--hairline); }
+.view--orchestra .orch-step:last-child { border-bottom: 1px solid var(--hairline); }
+.view--orchestra .orch-step__n { font-size: var(--fs-13); line-height: var(--lh-14); color: var(--text-3); }
+.view--orchestra .orch-step__title { font-weight: var(--fw-medium); }
+.view--orchestra .orch-step__text { font-size: var(--fs-13); color: var(--text-2); }
+.view--orchestra .orch-empty__actions { display: flex; gap: var(--sp-2); }
+.view--orchestra .is-empty .orch-zoom, .view--orchestra .is-empty .orch-bar { display: none; }
+
+@media (prefers-reduced-motion: reduce) { .view--orchestra .orch-lane__chev { transition: none; } }

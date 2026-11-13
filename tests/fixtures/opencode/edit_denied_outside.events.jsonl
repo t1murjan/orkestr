@@ -1,0 +1,31 @@
+{"type": "session", "data": {"session_id": "ses_e2c2578f5ffeCKyyCZwQa6mxoB", "model": "lmstudio-8804/mock-model", "context_window": 32768}}
+{"type": "tool_start", "data": {"tool_id": "call_1", "name": "write", "input": {"filePath": "/tmp/outside_oc.txt", "content": "made by mock\n", "file_path": "/tmp/outside_oc.txt"}, "mcp": null}}
+{"type": "tool_end", "data": {"tool_id": "call_1", "output": "The user has specified a rule which prevents you from using this specific tool call. Here are some of the relevant rules [{\"permission\":\"*\",\"action\":\"allow\",\"pattern\":\"*\"},{\"permission\":\"external_directory\",\"pattern\":\"*\",\"action\":\"ask\"},{\"permission\":\"external_directory\",\"pattern\":\"/tmp/orkestr-oc-smoke-sr4rp5bi/data/opencode/tool-output/*\",\"action\":\"allow\"},{\"permission\":\"external_directory\",\"pattern\":\"/tmp/opencode/*\",\"action\":\"allow\"},{\"permission\":\"*\",\"action\":\"deny\",\"pattern\":\"*\"},{\"permission\":\"external_directory\",\"action\":\"deny\",\"pattern\":\"*\"},{\"permission\":\"external_directory\",\"pattern\":\"/tmp/orkestr-oc-smoke-sr4rp5bi/data/opencode/tool-output/*\",\"action\":\"allow\"},{\"permission\":\"*\",\"pattern\":\"*\",\"action\":\"deny\"},{\"permission\":\"external_directory\",\"pattern\":\"*\",\"action\":\"deny\"}]", "is_error": true}}
+{"type": "usage", "data": {"input_tokens": 200, "output_tokens": 20, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 220, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "text", "data": {"text": "Результат ", "delta": true}}
+{"type": "text", "data": {"text": "записи: ", "delta": true}}
+{"type": "text", "data": {"text": "The ", "delta": true}}
+{"type": "text", "data": {"text": "user ", "delta": true}}
+{"type": "text", "data": {"text": "has ", "delta": true}}
+{"type": "text", "data": {"text": "specified ", "delta": true}}
+{"type": "text", "data": {"text": "a ", "delta": true}}
+{"type": "text", "data": {"text": "rule ", "delta": true}}
+{"type": "text", "data": {"text": "which ", "delta": true}}
+{"type": "text", "data": {"text": "prevents ", "delta": true}}
+{"type": "text", "data": {"text": "you ", "delta": true}}
+{"type": "text", "data": {"text": "from ", "delta": true}}
+{"type": "text", "data": {"text": "using ", "delta": true}}
+{"type": "text", "data": {"text": "this ", "delta": true}}
+{"type": "text", "data": {"text": "specific ", "delta": true}}
+{"type": "text", "data": {"text": "tool ", "delta": true}}
+{"type": "text", "data": {"text": "call. ", "delta": true}}
+{"type": "text", "data": {"text": "Here ", "delta": true}}
+{"type": "text", "data": {"text": "are ", "delta": true}}
+{"type": "text", "data": {"text": "some ", "delta": true}}
+{"type": "text", "data": {"text": "of ", "delta": true}}
+{"type": "text", "data": {"text": "the ", "delta": true}}
+{"type": "text", "data": {"text": "relevant ", "delta": true}}
+{"type": "text", "data": {"text": "rules ", "delta": true}}
+{"type": "text", "data": {"text": "[{\"permission\":\"*\",\"action\":\"allow\",\"pattern\":\"*\"},{\"permission\":\"external_directory\",\"pattern\":\"*\",\"action\":\"ask\"},{\"permission\":\"external_directory\",\"pattern\":\"/tmp/orkestr-oc-s", "delta": true}}
+{"type": "usage", "data": {"input_tokens": 300, "output_tokens": 106, "cache_read_tokens": 0, "cache_write_tokens": 0, "context_used": 406, "context_window": 32768, "cost_usd": 0.0}}
+{"type": "result", "data": {"text": "Результат записи: The user has specified a rule which prevents you from using this specific tool call. Here are some of the relevant rules [{\"permission\":\"*\",\"action\":\"allow\",\"pattern\":\"*\"},{\"permission\":\"external_directory\",\"pattern\":\"*\",\"action\":\"ask\"},{\"permission\":\"external_directory\",\"pattern\":\"/tmp/orkestr-oc-s", "is_error": false, "cost_usd": 0.0, "num_turns": 2}}
