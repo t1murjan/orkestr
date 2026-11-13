@@ -199,7 +199,7 @@ async def health(request: Request) -> dict[str, Any]:
 async def connect(request: Request) -> dict[str, Any]:
     base = str(request.base_url).rstrip("/")
     url = f"{base}/mcp/agent/{{agent_id}}"
-    snippet = json.dumps({"mcp": {"orkestr": {"type": "remote", "url": url, "enabled": True}}},
+    snippet = json.dumps({"mcp": {"orkestr": {"type": "remote", "url": url, "enabled": True, "timeout": 900000}}},
                          indent=2, ensure_ascii=False)
     return {"mcp": {
         "agent_url_template": url,
