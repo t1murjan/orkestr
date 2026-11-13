@@ -12,23 +12,34 @@
 ![Граф оркестра](docs/screens/1-orkestr.png)
 ![Запуск](docs/screens/2-zapusk.png)
 
-## Установка и запуск (Linux)
+## Установка (Linux)
 
-Нужны Python 3.11+ и установленные `claude` и/или `opencode` в `PATH`.
-
-```bash
-python3 -m venv .venv
-```
+Нужны git и Python 3.11+, а также `claude` и/или `opencode` в `PATH`.
 
 ```bash
-.venv/bin/pip install -e .
+curl -fsSL https://raw.githubusercontent.com/t1murjan/orkestr/main/install.sh | bash
 ```
+
+Скрипт скачает программу в `~/projects/orkestr`, поставит зависимости в отдельное окружение и добавит команду `orkestr` и значок «Оркестр» в меню приложений. Другая папка: `ORKESTR_DIR=~/путь`, другой порт: `ORKESTR_PORT=9000` перед `bash`.
+
+Если репозиторий приватный, `curl` его не увидит. Тогда клонируйте сами и запустите установщик из папки:
 
 ```bash
-.venv/bin/python -m orkestr
+git clone https://github.com/t1murjan/orkestr ~/projects/orkestr && ~/projects/orkestr/install.sh
 ```
 
-Откройте http://127.0.0.1:8787. Параметры: `--port`, `--host`, `--db ПУТЬ`, `--demo` (демо-команда с имитацией работы, без обращения к моделям).
+## Запуск
+
+| Команда | Что делает |
+| --- | --- |
+| `orkestr` | Запускает пульт в фоне, если он ещё не запущен, и открывает его в браузере |
+| `orkestr --demo` | То же, с демо-командой агентов, которая работает без обращения к моделям |
+| `orkestr stop` | Останавливает |
+| `orkestr status` | Показывает, запущен ли |
+| `orkestr log` | Журнал сервера |
+| `orkestr update` | Обновляет программу с GitHub |
+
+Адрес: http://127.0.0.1:8787. База данных лежит в `~/.local/share/orkestr`, журнал — в `~/.local/state/orkestr`. Папка проекта по умолчанию для агентов — та, из которой запущена команда; из меню приложений — `~/projects`.
 
 Пульт слушает только `127.0.0.1` и не имеет авторизации. Не открывайте его порт в сеть.
 
