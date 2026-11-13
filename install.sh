@@ -50,8 +50,10 @@ fi
 # --- зависимости ---------------------------------------------------------
 say "Ставлю зависимости (виртуальное окружение в $DIR/.venv)"
 [ -x "$DIR/.venv/bin/python" ] || "$PY" -m venv "$DIR/.venv"
-"$DIR/.venv/bin/python" -m pip install --quiet --upgrade pip
-"$DIR/.venv/bin/python" -m pip install --quiet -e "$DIR"
+PIP_LOG="$STATE_DIR/install.log"; mkdir -p "$STATE_DIR"
+{ "$DIR/.venv/bin/python" -m pip install --upgrade pip \
+  && "$DIR/.venv/bin/python" -m pip install -e "$DIR"; } >"$PIP_LOG" 2>&1 \
+  || { tail -n 25 "$PIP_LOG" >&2; die "Не удалось поставить зависимости. Полный журнал: $PIP_LOG"; }
 
 # --- где лежат агенты ----------------------------------------------------
 # Из меню приложений PATH короче, чем в терминале, поэтому запоминаем, где
