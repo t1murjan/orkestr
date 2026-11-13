@@ -132,7 +132,7 @@ if [ -z "\${TERM:-}" ] || [ "\$WORKDIR" = "\$HOME" ]; then
 fi
 cd "\$WORKDIR"
 
-nohup "\$DIR/.venv/bin/python" -m orkestr --port "\$PORT" --db "\$DATA_DIR/orkestr.db" "\$@" >>"\$LOG" 2>&1 &
+PYTHONSAFEPATH=1 nohup "\$DIR/.venv/bin/python" -P -m orkestr --port "\$PORT" --db "\$DATA_DIR/orkestr.db" "\$@" >>"\$LOG" 2>&1 &
 echo \$! > "\$PIDFILE"
 for _ in \$(seq 1 60); do
   alive && break
@@ -162,7 +162,7 @@ EOF
 command -v update-desktop-database >/dev/null && update-desktop-database "$APPS_DIR" >/dev/null 2>&1 || true
 
 # --- итог ----------------------------------------------------------------
-say "Готово. Версия: $("$DIR/.venv/bin/python" -c 'import orkestr; print(orkestr.__version__)')"
+say "Готово. Версия: $("$DIR/.venv/bin/python" -P -c 'import orkestr; print(orkestr.__version__)')"
 echo "  Запуск: orkestr        (или «Оркестр» в меню приложений)"
 echo "  Демо:   orkestr --demo"
 echo "  Стоп:   orkestr stop"
